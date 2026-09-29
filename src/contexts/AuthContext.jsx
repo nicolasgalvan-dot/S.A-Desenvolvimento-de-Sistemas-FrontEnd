@@ -74,7 +74,7 @@ export function AuthProvider({ children }) {
     // A chamada real à API — endpoint a ser implementado no backend
     const response = await api.post('/auth/login', { email, password })
 
-    const { token: receivedToken, user: receivedUser } = response.data
+    const { token: receivedToken, user: receivedUser } = response.data.data
 
     // Persiste no localStorage
     localStorage.setItem('token', receivedToken)
