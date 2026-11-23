@@ -2,6 +2,81 @@
 
 > Sistema de gestão financeira pessoal com controle de receitas, despesas e dashboard analítico.
 
+## 🚀 Como rodar (backend + frontend) — passo a passo
+
+O frontend depende da API do backend. Suba os dois projetos em terminais separados:
+
+- Backend: `SA-DesenvolvimentoDeSistemas-Backend` → http://localhost:3333
+- Frontend: `S.A-Desenvolvimento-de-Sistemas-FrontEnd` → http://localhost:5173
+
+### Pré-requisitos
+- Node.js 18+ e npm
+- Backend do FinTech Flow configurado com PostgreSQL e rodando
+
+### 1. Instale as dependências nos dois projetos
+
+```bash
+# Backend
+cd SA-DesenvolvimentoDeSistemas-Backend
+npm install
+
+# Frontend (outro terminal)
+cd S.A-Desenvolvimento-de-Sistemas-FrontEnd
+npm install
+```
+
+### 2. Configure o `.env` do backend
+
+No backend, copie `.env.example` para `.env` e ajuste principalmente:
+
+```env
+PORT=3333
+DATABASE_URL="postgresql://usuario:senha@localhost:5432/fintech_flow?schema=public"
+JWT_SECRET="troque-por-uma-chave-secreta"
+CORS_ORIGIN=http://localhost:5173
+```
+
+Em seguida, prepare o banco e inicie a API:
+
+```bash
+npm run prisma:generate
+npm run prisma:migrate
+npm run dev
+```
+
+Confira em http://localhost:3333/api/health (retorno `{"status":"OK"}`) ou na documentação Swagger em http://localhost:3333/api/docs.
+
+### 3. Configure o `.env` do frontend
+
+Na raiz do frontend:
+
+```env
+VITE_API_URL=http://localhost:3333/api
+```
+
+> Após alterar o `.env`, reinicie o Vite.
+
+### 4. Inicie o frontend
+
+```bash
+npm run dev
+```
+
+Acesse http://localhost:5173. A aplicação redireciona para `/login`.
+
+### 5. Teste a integração
+
+1. Clique em **Criar conta gratuita**, preencha nome, e-mail e senha (mínimo 6 caracteres).
+2. Faça login com o usuário criado — você será levado ao `/dashboard`.
+3. Clique em **+ Nova transação** e cadastre uma receita e uma despesa.
+4. Confira os cards (**Saldo Atual**, **Total de Receitas**, **Total de Despesas**, **Transações**), os gráficos e a aba **Transações**.
+5. Para testar a API isoladamente, use o Swagger do backend: faça login, copie o token e clique em **Authorize** com `Bearer <token>`.
+
+### Problemas comuns
+- Cards zerados / erro ao carregar dados: confirme `VITE_API_URL` e se o backend está rodando.
+- Erro de CORS no console: confirme `CORS_ORIGIN` no `.env` do backend e reinicie a API.
+- 401 redirecionando para o login: token expirado — faça login novamente.
+
 ## Tecnologias
 
 | Tecnologia | Versão |

@@ -49,7 +49,7 @@ function TransactionForm({ initialData = null, onSubmit, onCancel, loading = fal
       e.amount = 'O valor deve ser maior que zero.'
     }
     if (!form.type)                     e.type = 'Selecione o tipo.'
-    if (!form.category)                 e.category = 'Selecione a categoria.'
+    // Categoria e data são campos da UI; o backend ainda não os persiste.
     if (!form.date)                     e.date = 'Informe a data.'
     return e
   }
@@ -120,7 +120,7 @@ function TransactionForm({ initialData = null, onSubmit, onCancel, loading = fal
 
       {/* Categoria */}
       <div className="form-group">
-        <label className="form-label required" htmlFor="tx-cat">Categoria</label>
+        <label className="form-label" htmlFor="tx-cat">Categoria</label>
         <select
           id="tx-cat"
           className={`form-select${errors.category ? ' error' : ''}`}

@@ -9,12 +9,39 @@ import api from './api'
  *   PUT    /transactions/:id      → { data: transaction }
  *   DELETE /transactions/:id      → { message: string }
  *
- * Formato de transação:
- *   { id, description, amount, type: 'income'|'expense', category, date, createdAt }
+ * Formato da API: { id, title, amount, type: 'INCOME'|'EXPENSE', createdAt }
+ * Formato usado na UI: { id, description, amount, type: 'income'|'expense', ... }
+ * A conversão entre os dois é feita por toApiPayload/fromApiTransaction.
  *
  * Parâmetros de busca (GET /transactions):
- *   page, limit, type, search, startDate, endDate, category
+ *   page, limit, type, search, startDate, endDate
  */
+
+/**
+ * Converte o formato do formulário (description/type minúsculo) para o
+ * contrato da API (title/type maiúsculo). Campos sem suporte no backend
+ * (category/date) são removidos para não falhar na validação Joi.
+ */
+function toApiPayload(data = {}) {
+  return {
+    title: data.title ?? data.description,
+    amount: data.amount,
+    type: String(data.type ?? '').toUpperCase(),
+  }
+}
+
+/**
+ * Converte a resposta da API para o formato usado pela tabela/formulário.
+ */
+function fromApiTransaction(tx = {}) {
+  const type = String(tx.type ?? '').toLowerCase()
+  return {
+    ...tx,
+    description: tx.description ?? tx.title ?? '',
+    category: tx.category ?? '',
+    type: type === 'income' || type === 'expense' ? type : '',
+  }
+}
 
 /**
  * Lista transações com filtros e paginação.
@@ -32,7 +59,7 @@ export async function getTransactions(params = {}) {
   // Suporta tanto { data: { transactions, pagination } } quanto { transactions, pagination }
   const payload = response.data?.data ?? response.data
   return {
-    transactions: payload?.transactions ?? payload ?? [],
+    transactions: (payload?.transactions ?? payload ?? []).map(fromApiTransaction),
     pagination: payload?.pagination ?? {
       page: 1,
       limit: 10,
@@ -48,8 +75,8 @@ export async function getTransactions(params = {}) {
  * @returns {Promise<object>} Transação criada
  */
 export async function createTransaction(data) {
-  const response = await api.post('/transactions', data)
-  return response.data?.data ?? response.data
+  const response = await api.post('/transactions', toApiPayload(data))
+  return fromApiTransaction(response.data?.data ?? response.data)
 }
 
 /**
@@ -59,8 +86,8 @@ export async function createTransaction(data) {
  * @returns {Promise<object>} Transação atualizada
  */
 export async function updateTransaction(id, data) {
-  const response = await api.put(`/transactions/${id}`, data)
-  return response.data?.data ?? response.data
+  const response = await api.put(`/transactions/${id}`, toApiPayload(data))
+  return fromApiTransaction(response.data?.data ?? response.data)
 }
 
 /**
