@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
+import './style.css'
 
 // Ponto de entrada da aplicação React.
 // Monta o componente raiz <App /> no elemento #root do index.html.

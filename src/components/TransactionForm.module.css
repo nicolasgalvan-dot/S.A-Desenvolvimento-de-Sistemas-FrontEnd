@@ -1,0 +1,57 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* Toggle de tipo */
+.typeToggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 20px;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 4px;
+}
+
+.typeBtn {
+  padding: 9px;
+  font-family: var(--font);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.typeBtn:hover {
+  background: var(--bg-card);
+  color: var(--text-primary);
+}
+
+.typeBtn.expense {
+  background: var(--danger-light);
+  color: var(--danger-text);
+  font-weight: 600;
+}
+
+.typeBtn.income {
+  background: var(--success-light);
+  color: var(--success-text);
+  font-weight: 600;
+}
+
+/* Ações do formulário */
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 8px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}

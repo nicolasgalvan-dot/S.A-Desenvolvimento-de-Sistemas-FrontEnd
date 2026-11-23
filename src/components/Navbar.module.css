@@ -1,0 +1,116 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  height: var(--navbar-h, 64px);
+  background: var(--primary);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  max-width: var(--content-max, 1280px);
+  margin: 0 auto;
+  padding: 0 24px;
+  gap: 16px;
+}
+
+/* ── Brand ── */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.brandName {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+
+/* ── Lado direito ── */
+.right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* ── Info do usuário ── */
+.user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  border: 2px solid rgba(255,255,255,0.3);
+}
+
+.userName {
+  color: rgba(255,255,255,0.92);
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.role {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: #93c5fd;
+  background: rgba(147,197,253,0.15);
+  border: 1px solid rgba(147,197,253,0.3);
+  padding: 2px 8px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ── Botão de logout ── */
+.logoutBtn {
+  padding: 7px 16px;
+  font-family: var(--font);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.9);
+  background: rgba(255,255,255,0.1);
+  border: 1.5px solid rgba(255,255,255,0.3);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background 0.18s ease, border-color 0.18s ease;
+  white-space: nowrap;
+}
+
+.logoutBtn:hover {
+  background: rgba(255,255,255,0.2);
+  border-color: rgba(255,255,255,0.5);
+}
+
+.logoutBtn:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+/* ── Mobile ── */
+@media (max-width: 640px) {
+  .inner { padding: 0 16px; }
+  .brandName { display: none; }
+  .userName { display: none; }
+  .role { display: none; }
+}
