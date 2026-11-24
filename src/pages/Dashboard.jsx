@@ -2,7 +2,6 @@ import { useState, useEffect, useCallback, useMemo } from 'react'
 import {
   AreaChart, Area,
   BarChart, Bar,
-  PieChart, Pie, Cell,
   XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
 } from 'recharts'
 import { useAuth } from '../contexts/AuthContext'
@@ -32,11 +31,6 @@ const CHART_COLORS = {
   expenses: '#e02424',
   balance:  '#1a56db',
 }
-
-const PIE_COLORS = [
-  '#1a56db','#e02424','#057a55','#d97706','#7c3aed',
-  '#db2777','#0891b2','#65a30d','#dc2626','#9333ea',
-]
 
 /* ── Componente principal ───────────────────────────────── */
 function Dashboard() {
@@ -161,8 +155,7 @@ function Dashboard() {
   }
 
   /* ── Dados memoizados para gráficos ── */
-  const monthlyData   = useMemo(() => dashData?.monthlyEvolution   ?? [], [dashData])
-  const categoryData  = useMemo(() => dashData?.categoryBreakdown  ?? [], [dashData])
+  const monthlyData = useMemo(() => dashData?.monthlyEvolution ?? [], [dashData])
 
   /* ── Render: Overview ── */
   const renderOverview = () => (
@@ -249,43 +242,6 @@ function Dashboard() {
             </div>
           </div>
 
-          {/* Pizza: distribuição de despesas por categoria */}
-          <div className="card">
-            <div className="card-header">
-              <h3 className="card-title">Despesas por Categoria</h3>
-            </div>
-            <div className="card-body">
-              {dashLoading ? (
-                <Loader size="md" label="Carregando gráfico..." />
-              ) : categoryData.length === 0 ? (
-                <p className="text-muted" style={{ textAlign: 'center', padding: '32px 0' }}>
-                  Sem dados de categorias disponíveis.
-                </p>
-              ) : (
-                <ResponsiveContainer width="100%" height={260}>
-                  <PieChart>
-                    <Pie
-                      data={categoryData}
-                      dataKey="amount"
-                      nameKey="category"
-                      cx="50%"
-                      cy="50%"
-                      outerRadius={90}
-                      label={({ category, percentage }) =>
-                        `${category} ${percentage ? `(${percentage.toFixed(0)}%)` : ''}`
-                      }
-                      labelLine={false}
-                    >
-                      {categoryData.map((_, i) => (
-                        <Cell key={i} fill={PIE_COLORS[i % PIE_COLORS.length]} />
-                      ))}
-                    </Pie>
-                    <Tooltip formatter={(v) => formatCurrency(v)} />
-                  </PieChart>
-                </ResponsiveContainer>
-              )}
-            </div>
-          </div>
         </div>
       )}
 

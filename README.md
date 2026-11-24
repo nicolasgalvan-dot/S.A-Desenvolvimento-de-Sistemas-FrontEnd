@@ -184,7 +184,7 @@ src/
 ## Funcionalidades
 
 - **Autenticação**: login, cadastro, logout, persistência de sessão via JWT
-- **Dashboard**: saldo, receitas, despesas, contagem de transações, gráficos de área, barra e pizza
+- **Dashboard**: saldo, receitas, despesas, contagem de transações, gráficos de área e barra
 - **Transações**: listagem, criação, edição, exclusão com confirmação
 - **Filtros**: busca por descrição, tipo (receita/despesa), período
 - **Paginação**: suporte à paginação do backend

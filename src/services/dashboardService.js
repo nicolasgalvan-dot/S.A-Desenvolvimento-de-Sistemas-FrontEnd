@@ -38,9 +38,5 @@ export async function getDashboardData(period = '30d') {
       income: item.income ?? 0,
       expenses: item.expenses ?? item.expense ?? 0,
     })),
-
-    // O modelo de dados não possui campo de categoria; o backend não fornece
-    // esse agrupamento, então o gráfico exibe seu estado vazio.
-    categoryBreakdown: payload?.categoryBreakdown ?? [],
   }
 }
